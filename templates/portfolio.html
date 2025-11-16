@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Our Portfolio - Featured Projects{% endblock %}
+
+{% block meta_description %}Explore our portfolio of successful technology projects including web applications, SaaS solutions, mobile apps, and specialized platforms for geoscience, school management, and CRM systems.{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Portfolio</li>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section for Portfolio -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">Our Portfolio</h1>
+        <p class="lead mb-4">Showcasing successful implementations of innovative technology solutions across various industries and sectors.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#portfolio" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-eye me-2"></i>View Projects
+          </a>
+          <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-plus me-2"></i>Start Your Project
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <img src="/static/images/nexus2.png" alt="Portfolio Showcase" class="img-fluid rounded shadow-lg" style="max-height: 400px;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Featured Projects</h2>
+        <p class="lead mb-4">Transforming businesses with innovative technology solutions</p>
+
+        <!-- Filter buttons -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+          <a href="{% url 'core:portfolio' %}"
+             class="btn {% if not current_expertise %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            All Projects
+          </a>
+          {% for key, value in expertise_choices.items %}
+          <a href="{% url 'core:portfolio' %}?expertise={{ key }}"
+             class="btn {% if current_expertise == key %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            {{ value }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      {% for project in projects %}
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          {% if project.featured %}
+          <div class="featured-badge">
+            <i class="fas fa-star"></i> Featured
+          </div>
+          {% endif %}
+          {% if project.image %}
+          <img src="{{ project.image.url }}"
+               alt="{{ project.title }}" class="img-fluid w-100">
+          {% else %}
+          <img src="https://via.placeholder.com/400x300/1a73e8/white?text={{ project.title }}"
+               alt="{{ project.title }}" class="img-fluid w-100">
+          {% endif %}
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">{{ project.title }}</h5>
+            {% if project.client %}
+            <p class="mb-2">{{ project.client }}</p>
+            {% endif %}
+            <p class="mb-3">{{ project.description|truncatewords:15 }}</p>
+            <small class="text-uppercase">{{ project.get_expertise_display }}</small>
+            <div class="mt-3">
+              <a href="{% url 'core:portfolio_detail' project_id=project.id %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-eye me-1"></i>View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <!-- Default projects if none in database -->
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          <img src="/static/images/nexus2.png" alt="Geoscience Platform" class="img-fluid w-100">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">Advanced Geoscience Data Platform</h5>
+            <p class="mb-2">Environmental Analytics Corp</p>
+            <p class="mb-3">Comprehensive data analysis platform for environmental research and monitoring.</p>
+            <small class="text-uppercase">Geoscience Platforms</small>
+            <div class="mt-3">
+              <a href="#" class="btn btn-primary btn-sm">
+                <i class="fas fa-eye me-1"></i>View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          <img src="/static/images/school.png" alt="School Management System" class="img-fluid w-100">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">University Management Portal</h5>
+            <p class="mb-2">State University</p>
+            <p class="mb-3">Complete digital transformation of university operations including student records and administrative workflows.</p>
+            <small class="text-uppercase">School Management Systems</small>
+            <div class="mt-3">
+              <a href="#" class="btn btn-primary btn-sm">
+                <i class="fas fa-eye me-1"></i>View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          <img src="/static/images/CRM.png" alt="CRM System" class="img-fluid w-100">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">Healthcare CRM Solution</h5>
+            <p class="mb-2">Medical Group Network</p>
+            <p class="mb-3">Patient management system with advanced analytics and automated communication workflows.</p>
+            <small class="text-uppercase">CRM Solutions</small>
+            <div class="mt-3">
+              <a href="#" class="btn btn-primary btn-sm">
+                <i class="fas fa-eye me-1"></i>View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Portfolio pagination" class="mt-5">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1{% if current_expertise %}&expertise={{ current_expertise }}{% endif %}">First</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_expertise %}&expertise={{ current_expertise }}{% endif %}">Previous</a>
+        </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_expertise %}&expertise={{ current_expertise }}{% endif %}">Next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_expertise %}&expertise={{ current_expertise }}{% endif %}">Last</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">{{ projects|length }}</span>
+          <span class="stats-label">Successful Projects</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">6</span>
+          <span class="stats-label">Industry Sectors</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">100%</span>
+          <span class="stats-label">Client Satisfaction</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">24/7</span>
+          <span class="stats-label">Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="display-5 fw-bold mb-3">Ready to Start Your Project?</h2>
+        <p class="lead mb-4">Join the growing list of businesses that trust us to deliver innovative technology solutions.</p>
+        <a href="{% url 'core:contact' %}" class="btn-cta">
+          <i class="fas fa-rocket me-2"></i>Start Your Project
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

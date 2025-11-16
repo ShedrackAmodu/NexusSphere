@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{{ project_name }} - Web Apps & SaaS Solutions{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Professional web applications and SaaS solutions specializing in geoscience platforms, school management systems, and CRM solutions.{% endblock %}">
+    <!-- Favicon -->
+    <link rel="icon" href="/static/images/logo.png" type="image/png">
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/png">
+    <!-- SEO and Social Sharing -->
+    <meta property="og:title" content="{% block og_title %}{{ project_name }} - {{ block.super }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ block.super }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}/static/images/logo.png{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{% if request %}{{ request.build_absolute_uri }}{% endif %}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ block.super }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ block.super }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}/static/images/logo.png{% endblock %}">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'core:index' %}">
+          <i class="fas fa-rocket me-2"></i>{{ project_name }}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'core:index' %}">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Services
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                <li><a class="dropdown-item" href="#services">All Services</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'core:services' %}?type=web_apps"><i class="fas fa-globe me-2"></i>Web Applications</a></li>
+                <li><a class="dropdown-item" href="{% url 'core:services' %}?type=enterprise_saas"><i class="fas fa-cloud me-2"></i>Enterprise SaaS</a></li>
+                <li><a class="dropdown-item" href="{% url 'core:services' %}?type=mobile_apps"><i class="fas fa-mobile-alt me-2"></i>Mobile Apps</a></li>
+                <li><a class="dropdown-item" href="{% url 'core:services' %}?type=geoscience"><i class="fas fa-mountain me-2"></i>Geoscience Platforms</a></li>
+                <li><a class="dropdown-item" href="{% url 'core:services' %}?type=school_mgmt"><i class="fas fa-graduation-cap me-2"></i>School Management</a></li>
+                <li><a class="dropdown-item" href="{% url 'core:services' %}?type=crm"><i class="fas fa-users me-2"></i>CRM Solutions</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'core:portfolio' %}">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'core:team' %}">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    {% block breadcrumbs %}
+    <nav aria-label="breadcrumb" class="bg-light py-3">
+      <div class="container">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="{% url 'core:index' %}"><i class="fas fa-home me-1"></i>Home</a></li>
+          {% block breadcrumb_items %}{% endblock %}
+        </ol>
+      </div>
+    </nav>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5><i class="fas fa-rocket me-2"></i>{{ project_name }}</h5>
+            <p class="mb-3">Leading provider of web applications and SaaS solutions. Specializing in geoscience platforms, school management systems, and custom CRM solutions.</p>
+            <div class="social-links">
+              <a href="#" class="text-light me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+              <a href="#" class="text-light me-3"><i class="fab fa-github fa-lg"></i></a>
+              <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h6>Services</h6>
+            <ul class="list-unstyled">
+              <li><a href="{% url 'core:services' %}?type=web_apps" class="text-light">Web Apps</a></li>
+              <li><a href="{% url 'core:services' %}?type=enterprise_saas" class="text-light">Enterprise SaaS</a></li>
+              <li><a href="{% url 'core:services' %}?type=mobile_apps" class="text-light">Mobile Apps</a></li>
+              <li><a href="{% url 'core:services' %}?type=geoscience" class="text-light">Geoscience</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h6>Company</h6>
+            <ul class="list-unstyled">
+              <li><a href="{% url 'core:about' %}" class="text-light">About Us</a></li>
+              <li><a href="{% url 'core:team' %}" class="text-light">Team</a></li>
+              <li><a href="{% url 'core:portfolio' %}" class="text-light">Portfolio</a></li>
+              <li><a href="{% url 'core:blog' %}" class="text-light">Blog</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h6>Contact Info</h6>
+            <p class="mb-1"><i class="fas fa-envelope me-2"></i>info@nexusspheresolutions.com</p>
+            <p class="mb-1"><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</p>
+            <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i>123 Tech Street, Silicon Valley, CA</p>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="mb-0">© {{ project_name }} {{ current_year }}. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="{% url 'core:privacy' %}" class="text-light me-3">Privacy Policy</a>
+            <a href="{% url 'core:terms' %}" class="text-light">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Blog{% endblock %}
+
+{% block meta_description %}{{ post.excerpt|default:post.content|striptags|truncatewords:20 }}{% endblock %}
+
+{% block og_title %}{{ post.title }} - {{ block.super }}{% endblock %}
+
+{% block og_description %}{{ post.excerpt|default:post.content|striptags|truncatewords:30 }}{% endblock %}
+
+{% if post.image %}
+{% block og_image %}{{ post.image.url }}{% endblock %}
+{% endif %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'core:blog' %}">Blog</a></li>
+{% if post.category %}
+<li class="breadcrumb-item"><a href="{% url 'core:blog' %}?category={{ post.category }}">{{ post.get_category_display }}</a></li>
+{% endif %}
+<li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+{% endblock %}
+
+{% block content %}
+<!-- Blog Post Header -->
+<section class="blog-post-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        {% if post.category %}
+        <div class="mb-3">
+          <span class="badge bg-primary">{{ post.get_category_display }}</span>
+        </div>
+        {% endif %}
+        <h1 class="display-4 fw-bold mb-4">{{ post.title }}</h1>
+        {% if post.excerpt %}
+        <p class="lead mb-4">{{ post.excerpt }}</p>
+        {% endif %}
+        <div class="post-meta d-flex justify-content-center flex-wrap gap-3 mb-4">
+          <small class="text-muted">
+            <i class="fas fa-calendar me-1"></i>{{ post.published_date|date:"F j, Y" }}
+          </small>
+          <small class="text-muted">
+            <i class="fas fa-user me-1"></i>{{ post.author.get_full_name|default:post.author.username }}
+          </small>
+          <small class="text-muted">
+            <i class="fas fa-clock me-1"></i>{{ post.content|striptags|wordcount|add:0 }} min read
+          </small>
+        </div>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid rounded shadow-lg mb-4" loading="lazy">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Post Content -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="blog-content">
+          {{ post.content|safe }}
+        </div>
+
+        <!-- Tags -->
+        {% if post.tags %}
+        <div class="mt-4 mb-4">
+          <h6 class="fw-bold text-muted">Tags:</h6>
+          {% for tag in post.tags.split %}
+          <span class="badge bg-light text-dark me-2 mb-2">
+            <i class="fas fa-tag me-1"></i>{{ tag }}
+          </span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Social Share -->
+        <div class="mt-5 pt-4 border-top">
+          <h6 class="fw-bold mb-3">Share this article:</h6>
+          <div class="d-flex gap-2">
+            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title|urlencode }}" target="_blank" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-twitter me-2"></i>Twitter
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-linkedin me-2"></i>LinkedIn
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-facebook me-2"></i>Facebook
+            </a>
+            <button onclick="navigator.share({ title: '{{ post.title }}', url: '{{ request.build_absolute_uri }}' })" class="btn btn-outline-secondary btn-sm" id="share-btn" style="display: none;">
+              <i class="fas fa-share me-2"></i>Share
+            </button>
+          </div>
+        </div>
+
+        <!-- Author Bio -->
+        <div class="mt-5 pt-4 border-top">
+          <div class="d-flex align-items-start">
+            <div class="author-avatar me-3">
+              {% if post.author.profile.image %}
+              <img src="{{ post.author.profile.image.url }}" alt="{{ post.author.get_full_name|default:post.author.username }}" class="rounded-circle" width="60" height="60">
+              {% else %}
+              <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <i class="fas fa-user fa-lg"></i>
+              </div>
+              {% endif %}
+            </div>
+            <div class="author-info">
+              <h6 class="fw-bold mb-2">Written by {{ post.author.get_full_name|default:post.author.username }}</h6>
+              <p class="text-muted mb-2">Technology expert and writer specializing in web development and digital transformation.</p>
+              <div>
+                {% comment %} Place social links or bio here if available {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="mt-5 pt-4 border-top">
+          <div class="d-flex justify-content-between">
+            <a href="{% url 'core:blog' %}" class="btn btn-outline-primary">
+              <i class="fas fa-arrow-left me-2"></i>All Blog Posts
+            </a>
+            {% if post.category %}
+            <a href="{% url 'core:blog' %}?category={{ post.category }}" class="btn btn-primary">
+              <i class="fas fa-folder me-2"></i>More {{ post.get_category_display }}
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Comments Section (placeholder) -->
+        <div class="mt-5 pt-4 border-top">
+          <h4 class="mb-4">Comments</h4>
+          <div class="bg-light p-4 rounded text-center">
+            <i class="fas fa-comments fa-2x text-secondary mb-3"></i>
+            <p class="mb-0 text-muted">Comments feature coming soon. We'd love to hear your thoughts!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- Recent Posts -->
+        <div class="mb-5">
+          <h5 class="fw-bold mb-3">Recent Posts</h5>
+          <div class="list-group list-group-flush">
+            <!-- Would need to implement logic to get recent posts -->
+            <a href="#" class="list-group-item list-group-item-action px-0">
+              <small class="text-muted">Mar 15, 2024</small>
+              <div><strong>How to Choose the Right Tech Stack</strong></div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action px-0">
+              <small class="text-muted">Feb 28, 2024</small>
+              <div><strong>Future of SaaS: Trends to Watch</strong></div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action px-0">
+              <small class="text-muted">Feb 10, 2024</small>
+              <div><strong>Building Scalable Web Applications</strong></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="mb-5">
+          <h5 class="fw-bold mb-3">Categories</h5>
+          <div class="list-group">
+            <a href="{% url 'core:blog' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              All Posts
+              <span class="badge bg-primary rounded-pill">12</span>
+            </a>
+            <a href="{% url 'core:blog' %}?category=tech" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              Technology Updates
+              <span class="badge bg-primary rounded-pill">8</span>
+            </a>
+            <a href="{% url 'core:blog' %}?category=case_study" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              Case Studies
+              <span class="badge bg-primary rounded-pill">3</span>
+            </a>
+            <a href="{% url 'core:blog' %}?category=tutorial" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+              Tutorials
+              <span class="badge bg-primary rounded-pill">4</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Posts -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Related Articles</h2>
+        <p class="lead">More insights from our blog</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <!-- Would need to implement logic to get related posts by category or tags -->
+      <div class="col-lg-4">
+        <div class="card blog-card h-100">
+          <div class="card-body">
+            <div class="mb-2">
+              <small class="text-muted">
+                <i class="fas fa-calendar me-1"></i>Jan 15, 2024
+              </small>
+            </div>
+            <h6 class="card-title fw-bold">
+              <a href="#" class="text-dark text-decoration-none">Digital Transformation Strategies for 2024</a>
+            </h6>
+            <p class="card-text small">Learn how leading companies are adapting to the rapidly changing digital landscape.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card blog-card h-100">
+          <div class="card-body">
+            <div class="mb-2">
+              <small class="text-muted">
+                <i class="fas fa-calendar me-1"></i>Dec 20, 2023
+              </small>
+            </div>
+            <h6 class="card-title fw-bold">
+              <a href="#" class="text-dark text-decoration-none">Building Better User Experiences</a>
+            </h6>
+            <p class="card-text small">Essential principles for creating intuitive and engaging user interfaces.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card blog-card h-100">
+          <div class="card-body">
+            <div class="mb-2">
+              <small class="text-muted">
+                <i class="fas fa-calendar me-1"></i>Nov 30, 2023
+              </small>
+            </div>
+            <h6 class="card-title fw-bold">
+              <a href="#" class="text-dark text-decoration-none">The Rise of Cloud-Native Applications</a>
+            </h6>
+            <p class="card-text small">Exploring the benefits and challenges of cloud-native development approaches.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="display-5 fw-bold mb-3">Ready to Transform Your Business?</h2>
+        <p class="lead mb-4">Let's discuss how our expertise can help you achieve your technology goals.</p>
+        <a href="{% url 'core:contact' %}" class="btn-cta">
+          <i class="fas fa-envelope me-2"></i>Contact Us Today
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Enable Web Share API if supported
+if (navigator.share) {
+  document.getElementById('share-btn').style.display = 'inline-block';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - NexusSphere Solutions{% endblock %}
+
+{% block meta_description %}Learn about NexusSphere Solutions' mission, values, and expertise in web applications, SaaS solutions, and specialized platforms for geoscience, school management, and CRM systems.{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">About</li>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section for About -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">About {{ project_name }}</h1>
+        <p class="lead mb-4">We are a leading provider of innovative technology solutions, specializing in web applications, enterprise SaaS, mobile apps, and specialized platforms for geoscience, school management systems, and CRM solutions.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#our-story" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-book-open me-2"></i>Our Story
+          </a>
+          <a href="{% url 'core:team' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-users me-2"></i>Meet the Team
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <img src="/static/images/logo.png" alt="NexusSphere Solutions" class="img-fluid rounded shadow-lg" style="max-height: 400px;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Story Section -->
+<section id="our-story" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Story</h2>
+        <p class="lead text-muted">From humble beginnings to industry leadership</p>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4">
+        <h3 class="fw-bold mb-3">Founded on Innovation</h3>
+        <p class="mb-3">NexusSphere Solutions was founded with a simple mission: to make cutting-edge technology accessible to businesses of all sizes. What started as a small team of passionate developers has grown into a comprehensive technology solutions provider.</p>
+        <p class="mb-3">Our journey began when we recognized that many businesses were struggling to find reliable technology partners who could deliver custom solutions tailored to their specific needs and industry requirements.</p>
+        <p class="mb-3">Today, we specialize in web applications, enterprise SaaS platforms, mobile solutions, and industry-specific technologies that drive real business results.</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker bg-primary"></div>
+            <div class="timeline-content">
+              <h5>2018</h5>
+              <p>Founded with a focus on web applications</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h5>2020</h5>
+              <p>Expanded into enterprise SaaS solutions</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker bg-info"></div>
+            <div class="timeline-content">
+              <h5>2022</h5>
+              <p>Diversified into mobile and specialized platforms</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker bg-warning"></div>
+            <div class="timeline-content">
+              <h5>2024</h5>
+              <p>Reached 500+ successful projects milestone</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission, Vision, Values -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Guiding Principles</h2>
+        <p class="lead">What drives us every day</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="mission-icon mb-3">
+            <i class="fas fa-bullseye fa-4x text-primary"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Our Mission</h4>
+          <p>To empower businesses with innovative technology solutions that drive growth, efficiency, and competitive advantage through custom web applications, SaaS platforms, and specialized industry solutions.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="vision-icon mb-3">
+            <i class="fas fa-eye fa-4x text-success"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Our Vision</h4>
+          <p>To be the trusted technology partner that transforms how businesses operate, making sophisticated technology solutions accessible and effective for organizations worldwide.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="values-icon mb-3">
+            <i class="fas fa-heart fa-4x text-info"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Our Values</h4>
+          <p><strong>Excellence:</strong> Delivering quality that exceeds expectations</p>
+          <p><strong>Innovation:</strong> Staying ahead with cutting-edge solutions</p>
+          <p><strong>Partnership:</strong> Building lasting relationships with clients</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Expertise Areas -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Expertise</h2>
+        <p class="lead">Specialized knowledge in key technology domains</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-globe fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">Web Applications</h5>
+          <p>Custom web applications built with modern frameworks and scalable architectures.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-cloud fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">SaaS Solutions</h5>
+          <p>Enterprise-grade Software-as-a-Service platforms with multi-tenant architectures.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">Mobile Applications</h5>
+          <p>Native and cross-platform mobile apps for iOS and Android with stunning UX.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-mountain fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">Geoscience Platforms</h5>
+          <p>Specialized solutions for geoscientific data analysis and research applications.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">School Management</h5>
+          <p>Comprehensive education management systems for universities and schools.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-users fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">CRM Solutions</h5>
+          <p>Customer relationship management systems with advanced analytics and automation.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-server fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">Cloud Infrastructure</h5>
+          <p>Scalable cloud solutions and infrastructure management for modern applications.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="expertise-card text-center">
+          <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+          <h5 class="fw-bold">Security & Compliance</h5>
+          <p>Security-first development practices and regulatory compliance expertise.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Why Choose {{ project_name }}</h2>
+        <p class="lead">What sets us apart from other technology providers</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 me-3">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-2">Custom Tailored Solutions</h5>
+            <p class="text-muted">Every project is unique. We don't believe in one-size-fits-all approaches. Our solutions are designed specifically to meet your business requirements and goals.</p>
+          </div>
+        </div>
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 me-3">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-2">Industry Expertise</h5>
+            <p class="text-muted">Our team has deep knowledge of specific industries including geoscience, education, and CRM. We understand the unique challenges you face.</p>
+          </div>
+        </div>
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 me-3">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-2">Modern Technology Stack</h5>
+            <p class="text-muted">We use the latest technologies and frameworks to ensure your solution is scalable, secure, and future-proof.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 me-3">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-2">Full-Cycle Development</h5>
+            <p class="text-muted">From initial discovery and design to development, deployment, and ongoing support—we handle every aspect of your project.</p>
+          </div>
+        </div>
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 me-3">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-2">Transparent Communication</h5>
+            <p class="text-muted">Clear, regular updates and collaborative decision-making ensure you always know where your project stands.</p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-2">Proven Track Record</h5>
+            <p class="text-muted">Over 500 successful projects and 150+ satisfied clients validate our approach and expertise.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="display-5 fw-bold mb-3">Ready to Start Your Success Story?</h2>
+        <p class="lead mb-4">Let's discuss how we can help transform your business with innovative technology solutions.</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-envelope me-2"></i>Contact Us
+          </a>
+          <a href="{% url 'core:portfolio' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-eye me-2"></i>View Our Work
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

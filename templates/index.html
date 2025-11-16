@@ -1,0 +1,299 @@
+
+{% extends "base.html" %}
+
+{% block title %} - Leading Web Apps & SaaS Solutions{% endblock %}
+
+{% block breadcrumbs %}
+<!-- Hide breadcrumbs on homepage -->
+{% endblock %}
+
+{% block meta_description %}Transform your business with our expert web applications, enterprise SaaS solutions, mobile apps, and specialized platforms for geoscience, school management, and CRM systems.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">Empowering Businesses with Innovative Technology Solutions</h1>
+        <p class="lead mb-4">We specialize in web applications, enterprise SaaS, mobile solutions, and specialized platforms for geoscience, school management systems, and CRM solutions.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#contact" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-paper-plane me-2"></i>Get Started
+          </a>
+          <a href="#portfolio" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-eye me-2"></i>View Our Work
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <img src="/static/images/logo.png" alt="NexusSphere Solutions" class="img-fluid rounded shadow-lg" style="max-height: 400px;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Expertise</h2>
+        <p class="lead text-muted">Comprehensive technology solutions tailored to your industry needs</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      {% for service in services %}
+      <div class="col-lg-4 col-md-6">
+        <div class="card service-card h-100">
+          <div class="card-body text-center">
+            <div class="service-icon">
+              <i class="{{ service.icon|default:'fas fa-cogs' }}"></i>
+            </div>
+            <h5 class="card-title fw-bold">{{ service.get_expertise_display }}</h5>
+            <p class="card-text">{{ service.description|truncatewords:20 }}</p>
+            {% if service.price_range %}
+            <p class="text-primary fw-bold">{{ service.price_range }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-lg-4 col-md-6">
+        <div class="card service-card h-100">
+          <div class="card-body text-center">
+            <div class="service-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <h5 class="card-title fw-bold">Web Applications</h5>
+            <p class="card-text">Custom web applications built with modern technologies and frameworks.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="card service-card h-100">
+          <div class="card-body text-center">
+            <div class="service-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h5 class="card-title fw-bold">Enterprise SaaS</h5>
+            <p class="card-text">Scalable Software-as-a-Service solutions for businesses of all sizes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="card service-card h-100">
+          <div class="card-body text-center">
+            <div class="service-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h5 class="card-title fw-bold">Mobile Applications</h5>
+            <p class="card-text">Native and cross-platform mobile apps for iOS and Android.</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Featured Projects</h2>
+        <p class="lead text-muted">Showcasing our expertise through successful implementations</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      {% for project in featured_projects %}
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          <img src="{% if project.image %}{{ project.image.url }}{% else %}https://via.placeholder.com/400x300/1a73e8/white?text={{ project.title }}{% endif %}"
+               alt="{{ project.title }}" class="img-fluid w-100">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">{{ project.title }}</h5>
+            <p class="mb-2">{{ project.client }}</p>
+            <small class="text-uppercase">{{ project.get_expertise_display }}</small>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-lg-4 col-md-6">
+      <div class="portfolio-card">
+          <img src="/static/images/nexus2.png" alt="Geoscience Platform" class="img-fluid w-100" loading="lazy">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">Geoscience Data Analysis Platform</h5>
+            <p class="mb-2">Environmental Consulting Firm</p>
+            <small class="text-uppercase">Geoscience Platforms</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          <img src="/static/images/school.png" alt="School Management System" class="img-fluid w-100">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">University Management System</h5>
+            <p class="mb-2">Private University</p>
+            <small class="text-uppercase">School Management</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="portfolio-card">
+          <img src="/static/images/CRM.png" alt="CRM System" class="img-fluid w-100">
+          <div class="portfolio-overlay">
+            <h5 class="mb-2">Customer Relationship Management</h5>
+            <p class="mb-2">Healthcare Provider</p>
+            <small class="text-uppercase">CRM Solutions</small>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'core:portfolio' %}" class="btn btn-primary btn-lg px-4">
+        <i class="fas fa-arrow-right me-2"></i>View All Projects
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">What Our Clients Say</h2>
+        <p class="lead text-muted">Trusted by businesses worldwide</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Exceptional work on our geoscience platform. The team understood our complex requirements and delivered a solution that exceeded expectations."</p>
+          <p class="testimonial-author">Dr. Sarah Johnson<br><small class="text-muted">Chief Scientist, GeoTech Solutions</small></p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The school management system transformed how we operate. Student records, scheduling, and communication are now seamless."</p>
+          <p class="testimonial-author">Michael Rodriguez<br><small class="text-muted">Director, Metropolitan University</small></p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Our CRM implementation has boosted sales by 40%. The customization options and user-friendly interface are outstanding."</p>
+          <p class="testimonial-author">Jennifer Chen<br><small class="text-muted">CEO, Healthcare Solutions Inc.</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">500+</span>
+          <span class="stats-label">Projects Delivered</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">150+</span>
+          <span class="stats-label">Happy Clients</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">5+</span>
+          <span class="stats-label">Years Experience</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <span class="stats-number">24/7</span>
+          <span class="stats-label">Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4">
+        <h2 class="display-5 fw-bold mb-4">Why Choose {{ project_name }}?</h2>
+        <p class="lead mb-4">We combine cutting-edge technology with deep industry expertise to deliver solutions that drive real business results.</p>
+        <ul class="list-unstyled">
+          <li class="mb-3">
+            <i class="fas fa-check-circle text-primary me-3"></i>
+            <strong>Custom Solutions:</strong> Tailored to your specific business needs
+          </li>
+          <li class="mb-3">
+            <i class="fas fa-check-circle text-primary me-3"></i>
+            <strong>Industry Experts:</strong> Deep knowledge in geoscience, education, and CRM
+          </li>
+          <li class="mb-3">
+            <i class="fas fa-check-circle text-primary me-3"></i>
+            <strong>Modern Technology:</strong> Latest frameworks and best practices
+          </li>
+          <li class="mb-3">
+            <i class="fas fa-check-circle text-primary me-3"></i>
+            <strong>Reliable Support:</strong> Ongoing maintenance and updates
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 text-center">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="p-4 bg-primary text-white rounded">
+              <i class="fas fa-code fa-3x mb-3"></i>
+              <h5>Web Development</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-success text-white rounded">
+              <i class="fas fa-mobile-alt fa-3x mb-3"></i>
+              <h5>Mobile Apps</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-warning text-white rounded">
+              <i class="fas fa-cloud fa-3x mb-3"></i>
+              <h5>SaaS Solutions</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-info text-white rounded">
+              <i class="fas fa-users fa-3x mb-3"></i>
+              <h5>Consulting</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section id="contact" class="cta-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="display-5 fw-bold mb-3">Ready to Start Your Project?</h2>
+        <p class="lead mb-4">Let's discuss how we can help transform your business with innovative technology solutions.</p>
+        <a href="{% url 'core:contact' %}" class="btn-cta">
+          <i class="fas fa-envelope me-2"></i>Contact Us Today
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

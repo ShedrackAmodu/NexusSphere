@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Get Started Today{% endblock %}
+
+{% block meta_description %}Ready to start your next project? Contact NexusSphere Solutions for expert web applications, SaaS solutions, mobile apps, and specialized platforms.{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Contact</li>
+{% endblock %}
+
+{% block content %}
+<!-- Contact Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">Start Your Project Today</h1>
+        <p class="lead mb-4">Ready to transform your business with cutting-edge technology? Let's discuss your project and how we can bring your vision to life.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#contact-form" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-paper-plane me-2"></i>Get Started
+          </a>
+          <a href="{% url 'core:brochure' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-download me-2"></i>Download Brochure
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <img src="/static/images/logo.png" alt="NexusSphere Contact" class="img-fluid rounded shadow-lg" style="max-height: 300px;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="contact-form">
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <h1 class="display-4 fw-bold mb-4">Get In Touch</h1>
+      <p class="lead">Let's discuss how we can help transform your business with innovative technology solutions.</p>
+    </div>
+  </div>
+
+  <div class="row g-5">
+    <!-- Contact Form -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-5">
+          <h3 class="card-title mb-4">Send us a message</h3>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" action="{% url 'core:contact' %}">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="name" class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="col-12">
+                <label for="company" class="form-label">Company (optional)</label>
+                <input type="text" class="form-control" id="company" name="company">
+              </div>
+              <div class="col-12">
+                <label for="message" class="form-label">Message *</label>
+                <textarea class="form-control" id="message" name="message" rows="6" placeholder="Tell us about your project..." required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg px-4" id="submit-btn">
+                  <span id="btn-text"><i class="fas fa-paper-plane me-2"></i>Send Message</span>
+                  <span id="btn-loading" style="display: none;"><i class="fas fa-spinner fa-spin me-2"></i>Sending...</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="col-lg-4">
+      <div class="mb-5">
+        <h3 class="mb-4">Contact Information</h3>
+        <div class="d-flex mb-3">
+          <i class="fas fa-envelope text-primary me-3 mt-1"></i>
+          <div>
+            <strong>Email</strong><br>
+            <a href="mailto:info@nexusspheresolutions.com">info@nexusspheresolutions.com</a>
+          </div>
+        </div>
+        <div class="d-flex mb-3">
+          <i class="fas fa-phone text-primary me-3 mt-1"></i>
+          <div>
+            <strong>Phone</strong><br>
+            <a href="tel:+15551234567">+1 (555) 123-4567</a>
+          </div>
+        </div>
+        <div class="d-flex mb-3">
+          <i class="fas fa-map-marker-alt text-primary me-3 mt-1"></i>
+          <div>
+            <strong>Address</strong><br>
+            123 Tech Street<br>
+            Silicon Valley, CA 94000
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <h4 class="mb-3">Follow Us</h4>
+        <div class="d-flex gap-3">
+          <a href="#" class="btn btn-outline-primary">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="btn btn-outline-primary">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="#" class="btn btn-outline-primary">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="mb-3">What to expect</h4>
+        <ul class="list-unstyled">
+          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Response within 24 hours</li>
+          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Free consultation</li>
+          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Detailed project proposal</li>
+          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Industry best practices</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('btn-text');
+  const btnLoading = document.getElementById('btn-loading');
+
+  form.addEventListener('submit', function() {
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+  });
+});
+</script>
+{% endblock %}

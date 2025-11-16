@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Latest Insights & Technology Updates{% endblock %}
+
+{% block meta_description %}Stay updated with the latest technology insights, industry trends, and expert perspectives on web applications, SaaS solutions, and digital transformation.{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Blog</li>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section for Blog -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">Latest Insights</h1>
+        <p class="lead mb-4">Stay informed with expert perspectives on technology, industry trends, and innovation. Our blog covers everything from web development best practices to digital transformation strategies.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#blog-posts" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-newspaper me-2"></i>Read Articles
+          </a>
+          <a href="#categories" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-tags me-2"></i>Browse Categories
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <div class="blog-hero-icon">
+          <i class="fas fa-blog fa-5x text-primary"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts Section -->
+<section id="blog-posts" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Featured Articles</h2>
+        <p class="lead mb-4">Expert insights and industry perspectives</p>
+
+        <!-- Category filter buttons -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+          <a href="{% url 'core:blog' %}"
+             class="btn {% if not current_category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            All Posts
+          </a>
+          {% for key, value in category_choices.items %}
+          <a href="{% url 'core:blog' %}?category={{ key }}"
+             class="btn {% if current_category == key %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            {{ value }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% if posts %}
+    <div class="row g-4">
+      <!-- Featured post (first post if exists) -->
+      {% if posts.0 %}
+      <div class="col-12 mb-5">
+        <div class="featured-blog-post">
+          <div class="row">
+            <div class="col-lg-6">
+              {% if posts.0.image %}
+              <img src="{{ posts.0.image.url }}" alt="{{ posts.0.title }}" class="img-fluid rounded shadow-lg" loading="lazy">
+              {% else %}
+              <img src="https://via.placeholder.com/600x400/1a73e8/white?text=Featured+Post" alt="Featured Post" class="img-fluid rounded shadow-lg">
+              {% endif %}
+            </div>
+            <div class="col-lg-6 d-flex align-items-center">
+              <div>
+                <h3 class="display-6 fw-bold mb-3">
+                  <a href="{% url 'core:blog_detail' slug=posts.0.slug %}" class="text-dark text-decoration-none">
+                    {{ posts.0.title }}
+                  </a>
+                </h3>
+                {% if posts.0.excerpt %}
+                <p class="lead mb-3">{{ posts.0.excerpt }}</p>
+                {% else %}
+                <p class="lead mb-3">{{ posts.0.content|striptags|truncatewords:30 }}</p>
+                {% endif %}
+                <div class="d-flex align-items-center mb-3">
+                  <small class="text-muted me-3">
+                    <i class="fas fa-calendar me-1"></i>{{ posts.0.published_date|date:"M j, Y" }}
+                  </small>
+                  <small class="text-muted me-3">
+                    <i class="fas fa-user me-1"></i>{{ posts.0.author.get_full_name|default:posts.0.author.username }}
+                  </small>
+                  {% if posts.0.category %}
+                  <span class="badge bg-primary">{{ posts.0.get_category_display }}</span>
+                  {% endif %}
+                </div>
+                <a href="{% url 'core:blog_detail' slug=posts.0.slug %}" class="btn btn-primary">
+                  <i class="fas fa-arrow-right me-2"></i>Read More
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Other posts -->
+      {% for post in posts %}
+      {% if not forloop.first %}
+      <div class="col-lg-6">
+        <div class="card blog-card h-100">
+          {% if post.image %}
+          <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" loading="lazy">
+          {% endif %}
+          <div class="card-body">
+            <div class="mb-2">
+              {% if post.category %}
+              <span class="badge bg-primary me-2">{{ post.get_category_display }}</span>
+              {% endif %}
+              <small class="text-muted">
+                <i class="fas fa-calendar me-1"></i>{{ post.published_date|date:"M j, Y" }}
+              </small>
+            </div>
+            <h5 class="card-title fw-bold">
+              <a href="{% url 'core:blog_detail' slug=post.slug %}" class="text-dark text-decoration-none">
+                {{ post.title }}
+              </a>
+            </h5>
+            {% if post.excerpt %}
+            <p class="card-text">{{ post.excerpt }}</p>
+            {% else %}
+            <p class="card-text">{{ post.content|striptags|truncatewords:20 }}</p>
+            {% endif %}
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">
+                <i class="fas fa-user me-1"></i>{{ post.author.get_full_name|default:post.author.username }}
+              </small>
+              <a href="{% url 'core:blog_detail' slug=post.slug %}" class="btn btn-outline-primary btn-sm">
+                Read More
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Blog pagination" class="mt-5">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1{% if current_category %}&category={{ current_category }}{% endif %}">First</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">Previous</a>
+        </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">Next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_category %}&category={{ current_category }}{% endif %}">Last</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <!-- No posts message -->
+    <div class="text-center py-5">
+      <div class="display-5 mb-3">
+        <i class="fas fa-file-alt text-secondary"></i>
+      </div>
+      <h3 class="display-6 fw-bold mb-3">No Posts Yet</h3>
+      <p class="lead text-muted mb-4">Check back soon for our latest insights and updates.</p>
+      <a href="{% url 'core:contact' %}" class="btn btn-primary btn-lg">
+        <i class="fas fa-envelope me-2"></i>Contact Us
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Explore Topics</h2>
+        <p class="lead">Dive deeper into specific areas of interest</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="card category-card h-100 text-center">
+          <div class="card-body">
+            <div class="category-icon mb-3">
+              <i class="fas fa-code fa-3x text-primary"></i>
+            </div>
+            <h5 class="card-title fw-bold">Technology Updates</h5>
+            <p class="card-text">Stay current with the latest developments in web technologies, frameworks, and digital tools.</p>
+            <a href="{% url 'core:blog' %}?category=tech" class="btn btn-primary">
+              <i class="fas fa-arrow-right me-2"></i>Read Articles
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card category-card h-100 text-center">
+          <div class="card-body">
+            <div class="category-icon mb-3">
+              <i class="fas fa-lightbulb fa-3x text-primary"></i>
+            </div>
+            <h5 class="card-title fw-bold">Case Studies</h5>
+            <p class="card-text">Real-world examples of successful technology implementations and their business impact.</p>
+            <a href="{% url 'core:blog' %}?category=case_study" class="btn btn-primary">
+              <i class="fas fa-arrow-right me-2"></i>Read Articles
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card category-card h-100 text-center">
+          <div class="card-body">
+            <div class="category-icon mb-3">
+              <i class="fas fa-graduation-cap fa-3x text-primary"></i>
+            </div>
+            <h5 class="card-title fw-bold">Tutorials</h5>
+            <p class="card-text">Step-by-step guides and tutorials to help you learn new technologies and best practices.</p>
+            <a href="{% url 'core:blog' %}?category=tutorial" class="btn btn-primary">
+              <i class="fas fa-arrow-right me-2"></i>Read Articles
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Signup -->
+<section class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <h2 class="display-5 fw-bold mb-3">Stay Informed</h2>
+    <p class="lead mb-4">Subscribe to our newsletter for the latest insights, industry trends, and exclusive content.</p>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form class="d-flex">
+          <input type="email" class="form-control form-control-lg" placeholder="Enter your email address" aria-label="Email address">
+          <button class="btn btn-light btn-lg ms-2" type="submit">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

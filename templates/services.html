@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Expert Technology Solutions{% endblock %}
+
+{% block meta_description %}Explore our comprehensive technology services including web applications, SaaS solutions, mobile apps, and specialized platforms for geoscience, school management, and CRM systems.{% endblock %}
+
+{% block content %}
+<!-- Hero Section for Services -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">Our Technology Solutions</h1>
+        <p class="lead mb-4">From web applications to enterprise SaaS, we deliver cutting-edge technology solutions that drive business success across industries.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#services" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-eye me-2"></i>Explore Services
+          </a>
+          <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-envelope me-2"></i>Discuss Your Project
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <img src="/static/images/logo.png" alt="NexusSphere Technology Solutions" class="img-fluid rounded shadow-lg" style="max-height: 400px;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <h1 class="display-4 fw-bold mb-3">Our Services</h1>
+      <p class="lead mb-4">Comprehensive technology solutions tailored to your industry needs</p>
+
+      <!-- Filter buttons -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+        <a href="{% url 'core:services' %}"
+           class="btn {% if not expertise_filter %}btn-primary{% else %}btn-outline-primary{% endif %}">
+          All Services
+        </a>
+        {% for key, value in expertise_choices.items %}
+        <a href="{% url 'core:services' %}?type={{ key }}"
+           class="btn {% if expertise_filter == key %}btn-primary{% else %}btn-outline-primary{% endif %}">
+          {{ value }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    {% for service in services %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="{{ service.icon|default:'fas fa-cogs' }}"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">{{ service.title }}</h5>
+          <p class="card-text mb-3">{{ service.description|truncatewords:30 }}</p>
+          <div class="mb-3">
+            <span class="badge bg-primary me-1">{{ service.get_expertise_display }}</span>
+            {% if service.price_range %}
+            <span class="badge bg-success">{{ service.price_range }}</span>
+            {% endif %}
+          </div>
+          <ul class="list-unstyled text-start">
+            {% for feature in service.features %}
+            <li><i class="fas fa-check text-success me-2"></i>{{ feature }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <!-- Default services if none in database -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">Web Applications</h5>
+          <p class="card-text mb-3">Custom web applications built with modern technologies and frameworks. Responsive design, scalable architecture, and seamless user experience.</p>
+          <span class="badge bg-primary me-1">Web Applications</span>
+          <span class="badge bg-success">$15k-$50k</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="fas fa-cloud"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">Enterprise SaaS</h5>
+          <p class="card-text mb-3">Scalable Software-as-a-Service solutions for businesses of all sizes. Cloud-native applications with automatic updates and multi-tenant architecture.</p>
+          <span class="badge bg-primary me-1">Enterprise SaaS</span>
+          <span class="badge bg-success">$30k-$100k</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">Mobile Applications</h5>
+          <p class="card-text mb-3">Native and cross-platform mobile apps for iOS and Android. User-friendly interfaces, offline capabilities, and app store deployment.</p>
+          <span class="badge bg-primary me-1">Mobile Applications</span>
+          <span class="badge bg-success">$10k-$40k</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="fas fa-mountain"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">Geoscience Platforms</h5>
+          <p class="card-text mb-3">Specialized platforms for geoscientific data analysis, visualization, and research. GIS integration and real-time data processing.</p>
+          <span class="badge bg-primary me-1">Geoscience Platforms</span>
+          <span class="badge bg-success">$25k-$75k</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">School Management Systems</h5>
+          <p class="card-text mb-3">Comprehensive education management platforms. Student information systems, grade management, attendance tracking, and parental portals.</p>
+          <span class="badge bg-primary me-1">School Management Systems</span>
+          <span class="badge bg-success">$20k-$60k</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card service-card h-100">
+        <div class="card-body text-center">
+          <div class="service-icon mb-4">
+            <i class="fas fa-users"></i>
+          </div>
+          <h5 class="card-title fw-bold mb-3">CRM Solutions</h5>
+          <p class="card-text mb-3">Customer Relationship Management systems with lead management, sales tracking, customer service tools, and analytics dashboard.</p>
+          <span class="badge bg-primary me-1">CRM Solutions</span>
+          <span class="badge bg-success">$18k-$50k</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- CTA Section -->
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <div class="p-5 bg-primary text-white rounded">
+        <h3 class="mb-3">Not sure which service is right for you?</h3>
+        <p class="mb-4">Contact us for a free consultation and customized solution recommendation.</p>
+        <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg px-4">
+          <i class="fas fa-envelope me-2"></i>Get Free Consultation
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Process Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Process</h2>
+        <p class="lead">How we bring your vision to life</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-lightbulb text-primary"></i>
+          </div>
+          <h5 class="fw-bold">1. Discovery</h5>
+          <p>We understand your business goals, target audience, and technical requirements.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-drafting-compass text-primary"></i>
+          </div>
+          <h5 class="fw-bold">2. Design</h5>
+          <p>We create comprehensive designs and technical specifications for your approval.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-code text-primary"></i>
+          </div>
+          <h5 class="fw-bold">3. Development</h5>
+          <p>Our expert developers build your solution using the latest technologies and best practices.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-rocket text-primary"></i>
+          </div>
+          <h5 class="fw-bold">4. Launch</h5>
+          <p>We deploy your solution and provide ongoing support and maintenance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

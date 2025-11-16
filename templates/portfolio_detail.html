@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - Portfolio Project{% endblock %}
+
+{% block meta_description %}{{ project.description|truncatewords:20 }}{% endblock %}
+
+{% block og_title %}{{ project.title }} - {{ block.super }}{% endblock %}
+
+{% block og_description %}{{ project.description|truncatewords:30 }}{% endblock %}
+
+{% if project.image %}
+{% block og_image %}{{ project.image.url }}{% endblock %}
+{% endif %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'core:portfolio' %}">Portfolio</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ project.title }}</li>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section for Project Detail -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">{{ project.title }}</h1>
+        {% if project.client %}
+        <h3 class="text-primary mb-3">{{ project.client }}</h3>
+        {% endif %}
+        <p class="lead mb-4">{{ project.description }}</p>
+
+        <div class="row mb-4">
+          <div class="col-sm-6">
+            <strong>Expertise:</strong><br>
+            <span class="badge bg-primary">{{ project.get_expertise_display }}</span>
+          </div>
+          <div class="col-sm-6">
+            <strong>Technologies:</strong><br>
+            <small class="text-muted">{{ project.technologies|default:"N/A" }}</small>
+          </div>
+        </div>
+
+        {% if project.completion_date %}
+        <div class="mb-4">
+          <strong>Completed:</strong> {{ project.completion_date|date:"F Y" }}
+        </div>
+        {% endif %}
+
+        <div class="project-actions d-flex gap-3 flex-wrap">
+          {% if project.live_url %}
+          <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary btn-lg">
+            <i class="fas fa-external-link-alt me-2"></i>View Live Project
+          </a>
+          {% endif %}
+          {% if project.github_url %}
+          <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-secondary btn-lg">
+            <i class="fab fa-github me-2"></i>View Source Code
+          </a>
+          {% endif %}
+          <a href="{% url 'core:portfolio' %}" class="btn btn-outline-primary btn-lg">
+            <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        {% if project.image %}
+        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded shadow-lg" loading="lazy">
+        {% else %}
+        <img src="https://via.placeholder.com/600x400/1a73e8/white?text={{ project.title }}" alt="{{ project.title }}" class="img-fluid rounded shadow-lg">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Project Details Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mb-5">
+        <h2 class="display-5 fw-bold mb-4">Project Overview</h2>
+        <div class="row">
+          <div class="col-lg-8">
+            <h3 class="mb-3">Challenge</h3>
+            <p class="lead mb-4">Our client needed innovative technology solutions to address their specific business requirements. We analyzed their existing processes and identified opportunities for digital transformation.</p>
+
+            <h3 class="mb-3">Solution</h3>
+            <p class="lead mb-4">We implemented a comprehensive technology solution tailored to their industry needs, incorporating modern frameworks, scalable architecture, and user-centric design principles.</p>
+
+            <h3 class="mb-3">Results</h3>
+            <p class="lead mb-4">The implementation resulted in improved efficiency, enhanced user experience, and measurable business outcomes that exceeded our client's expectations.</p>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Project Details</h5>
+                <dl class="row">
+                  <dt class="col-sm-5">Type:</dt>
+                  <dd class="col-sm-7">{{ project.get_expertise_display }}</dd>
+
+                  <dt class="col-sm-5">Client:</dt>
+                  <dd class="col-sm-7">{{ project.client|default:"N/A" }}</dd>
+
+                  {% if project.completion_date %}
+                  <dt class="col-sm-5">Completed:</dt>
+                  <dd class="col-sm-7">{{ project.completion_date|date:"M Y" }}</dd>
+                  {% endif %}
+
+                  <dt class="col-sm-5">Status:</dt>
+                  <dd class="col-sm-7">
+                    {% if project.featured %}
+                    <span class="badge bg-warning">Featured Project</span>
+                    {% else %}
+                    Completed
+                    {% endif %}
+                  </dd>
+                </dl>
+
+                {% if project.live_url or project.github_url %}
+                <hr>
+                <h6>Links:</h6>
+                <div class="d-grid gap-2">
+                  {% if project.live_url %}
+                  <a href="{{ project.live_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                  </a>
+                  {% endif %}
+                  {% if project.github_url %}
+                  <a href="{{ project.github_url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                    <i class="fab fa-github me-2"></i>Source Code
+                  </a>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Features Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Key Features</h2>
+        <p class="lead">What made this project successful</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-rocket text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Modern Technology</h5>
+          <p class="text-muted">Leveraging the latest frameworks and technologies to ensure scalability and performance.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-users text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-3">User-Centric Design</h5>
+          <p class="text-muted">Intuitive interfaces designed with end-users in mind for optimal experience and adoption.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-chart-line text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Measurable Results</h5>
+          <p class="text-muted">Clear ROI and business impact with comprehensive analytics and performance tracking.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Projects Section (if we have multiple projects) -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-4">
+        <h2 class="display-5 fw-bold mb-3">More Projects</h2>
+        <p class="lead">Explore our other successful implementations</p>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="{% url 'core:portfolio' %}" class="btn btn-primary btn-lg">
+        <i class="fas fa-arrow-right me-2"></i>View All Projects
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="display-5 fw-bold mb-3">Ready for Your Success Story?</h2>
+        <p class="lead mb-4">Let's discuss how we can help transform your business with innovative technology solutions.</p>
+        <a href="{% url 'core:contact' %}" class="btn-cta">
+          <i class="fas fa-envelope me-2"></i>Start Your Project
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

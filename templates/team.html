@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}Our Team - Meet the Experts{% endblock %}
+
+{% block meta_description %}Meet the skilled team behind NexusSphere Solutions. Our experts bring together deep industry knowledge and technical expertise in web development, SaaS, and specialized platforms.{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Team</li>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section for Team -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in-up">
+        <h1 class="display-4 fw-bold mb-4">Meet Our Team</h1>
+        <p class="lead mb-4">Our diverse team of experts combines deep industry knowledge with cutting-edge technical skills to deliver exceptional technology solutions.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#team" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-users me-2"></i>Our Experts
+          </a>
+          <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-handshake me-2"></i>Join Our Team
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center fade-in-up">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="p-4 bg-primary text-white rounded">
+              <i class="fas fa-code fa-3x mb-3"></i>
+              <h5>Developers</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-success text-white rounded">
+              <i class="fas fa-chart-line fa-3x mb-3"></i>
+              <h5>Strategists</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-warning text-white rounded">
+              <i class="fas fa-users-gear fa-3x mb-3"></i>
+              <h5>Consultants</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-info text-white rounded">
+              <i class="fas fa-palette fa-3x mb-3"></i>
+              <h5>Designers</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Members Section -->
+<section id="team" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Experts</h2>
+        <p class="lead text-muted">Skilled professionals passionate about technology and innovation</p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      {% for member in team_members %}
+      <div class="col-lg-4 col-md-6">
+        <div class="card team-card h-100">
+          <div class="card-body text-center">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-image rounded-circle mb-3">
+            {% else %}
+            <div class="team-placeholder rounded-circle mb-3">
+              <i class="fas fa-user fa-3x text-secondary"></i>
+            </div>
+            {% endif %}
+            <h5 class="card-title fw-bold mb-2">{{ member.name }}</h5>
+            <h6 class="card-subtitle mb-3 text-primary">{{ member.position }}</h6>
+            {% if member.bio %}
+            <p class="card-text">{{ member.bio|truncatewords:20 }}</p>
+            {% endif %}
+            <div class="mt-3">
+              {% if member.email %}
+              <a href="mailto:{{ member.email }}" class="text-dark me-3">
+                <i class="fas fa-envelope"></i>
+              </a>
+              {% endif %}
+              {% if member.linkedin %}
+              <a href="{{ member.linkedin }}" target="_blank" class="text-dark me-3">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              {% endif %}
+              {% if member.github %}
+              <a href="{{ member.github }}" target="_blank" class="text-dark">
+                <i class="fab fa-github"></i>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <!-- Default team members if none in database -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card team-card h-100">
+          <div class="card-body text-center">
+            <div class="team-placeholder rounded-circle mb-3">
+              <i class="fas fa-user fa-3x text-secondary"></i>
+            </div>
+            <h5 class="card-title fw-bold mb-2">John Doe</h5>
+            <h6 class="card-subtitle mb-3 text-primary">Lead Developer</h6>
+            <p class="card-text">Full-stack developer with 10+ years of experience in web applications and SaaS solutions.</p>
+            <div class="mt-3">
+              <i class="fas fa-envelope text-secondary me-3"></i>
+              <i class="fab fa-linkedin text-secondary me-3"></i>
+              <i class="fab fa-github text-secondary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="card team-card h-100">
+          <div class="card-body text-center">
+            <div class="team-placeholder rounded-circle mb-3">
+              <i class="fas fa-user fa-3x text-secondary"></i>
+            </div>
+            <h5 class="card-title fw-bold mb-2">Jane Smith</h5>
+            <h6 class="card-subtitle mb-3 text-primary">UX Designer</h6>
+            <p class="card-text">Creative designer specializing in user experience and interface design for mobile and web applications.</p>
+            <div class="mt-3">
+              <i class="fas fa-envelope text-secondary me-3"></i>
+              <i class="fab fa-linkedin text-secondary me-3"></i>
+              <i class="fab fa-github text-secondary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="card team-card h-100">
+          <div class="card-body text-center">
+            <div class="team-placeholder rounded-circle mb-3">
+              <i class="fas fa-user fa-3x text-secondary"></i>
+            </div>
+            <h5 class="card-title fw-bold mb-2">Mike Johnson</h5>
+            <h6 class="card-subtitle mb-3 text-primary">Project Manager</h6>
+            <p class="card-text">Certified project manager with expertise in agile development and client relationship management.</p>
+            <div class="mt-3">
+              <i class="fas fa-envelope text-secondary me-3"></i>
+              <i class="fab fa-linkedin text-secondary me-3"></i>
+              <i class="fab fa-github text-secondary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Values Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Our Values</h2>
+        <p class="lead">The principles that guide everything we do</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-bullseye text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Excellence</h5>
+          <p class="text-muted">We strive for excellence in every project, delivering high-quality solutions that exceed expectations.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-users text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Collaboration</h5>
+          <p class="text-muted">We believe in the power of teamwork and work closely with our clients as partners in their success.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="text-center">
+          <div class="display-5 mb-3">
+            <i class="fas fa-lightbulb text-primary"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Innovation</h5>
+          <p class="text-muted">We stay at the forefront of technology, bringing innovative solutions that drive business growth.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join Us CTA -->
+<section class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <h2 class="display-5 fw-bold mb-3">Join Our Team</h2>
+    <p class="lead mb-4">We're always looking for talented individuals who share our passion for technology and innovation.</p>
+    <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg px-4">
+      <i class="fas fa-paper-plane me-2"></i>Contact Us
+    </a>
+  </div>
+</section>
+{% endblock %}
