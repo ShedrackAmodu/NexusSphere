@@ -1,6 +1,6 @@
 # 🚀 NexusSphere Solutions - Website Development Plan
 
-**🌐 Project Overview:** Build a professional Django-based company website for NexusSphere Solutions specializing in **Web Apps 📱, Enterprise SaaS ☁️, and Mobile Applications** with Python/JavaScript technologies. The site will showcase our expertise in **Geoscience Platforms 🏔️, School Management Systems 🎓, and CRM Solutions 💼**.
+**🌐 Project Overview:** Build a professional Django-based company website for NexusSphere Solutions specializing in **Web Apps 📱, Learning Management System ☁️, and Mobile Applications** with Python/JavaScript technologies. The site will showcase our expertise in **Geoscience Platforms 🏔️, School Management Systems 🎓, and CRM Solutions 💼**.
 
 ---
 

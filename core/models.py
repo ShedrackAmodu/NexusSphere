@@ -39,7 +39,7 @@ class Service(models.Model):
     """Model for service offerings."""
     EXPERTISE_CHOICES = [
         ('web_apps', 'Web Applications'),
-        ('enterprise_saas', 'Enterprise SaaS'),
+        ('enterprise_saas', 'Learning Management System'),
         ('mobile_apps', 'Mobile Applications'),
         ('geoscience', 'Geoscience Platforms'),
         ('school_mgmt', 'School Management Systems'),
@@ -66,7 +66,7 @@ class PortfolioProject(models.Model):
     """Model for portfolio projects."""
     EXPERTISE_CHOICES = [
         ('web_apps', 'Web Applications'),
-        ('enterprise_saas', 'Enterprise SaaS'),
+        ('enterprise_saas', 'Learning Management System'),
         ('mobile_apps', 'Mobile Applications'),
         ('geoscience', 'Geoscience Platforms'),
         ('school_mgmt', 'School Management Systems'),

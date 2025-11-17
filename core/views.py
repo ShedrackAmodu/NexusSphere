@@ -273,7 +273,7 @@ def brochure_view(request):
             "Please contact us at info@nexusspheresolutions.com for our full brochure.\n\n"
             "Services:\n"
             "- Web Applications\n"
-            "- Enterprise SaaS Solutions\n"
+            "- Learning Management System\n"
             "- Mobile Applications\n"
             "And more...",
             content_type='text/plain'

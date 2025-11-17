@@ -1,95 +1,488 @@
-
 {% extends "base.html" %}
 
-{% block title %} - Leading Web Apps & SaaS Solutions{% endblock %}
+{% block title %} NexusSphere- Apps & Learning Management Solutions{% endblock %}
 
 {% block breadcrumbs %}
 <!-- Hide breadcrumbs on homepage -->
 {% endblock %}
 
-{% block meta_description %}Transform your business with our expert web applications, enterprise SaaS solutions, mobile apps, and specialized platforms for geoscience, school management, and CRM systems.{% endblock %}
+{% block meta_description %}Transform your business with our expert web applications, learning management solutions, mobile apps, and specialized platforms for geoscience, school management, and CRM systems.{% endblock %}
 
 {% block content %}
+<style>
+  /* Homepage Specific Styles */
+  .hero-section {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #6c63ff 100%);
+    color: white;
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+  }
+  
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .hero-cta {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  
+  .btn-hero-primary {
+    background: white;
+    color: var(--accent-color);
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+  }
+  
+  .btn-hero-primary:hover {
+    background: transparent;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .btn-hero-secondary {
+    background: transparent;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+  }
+  
+  .btn-hero-secondary:hover {
+    background: white;
+    color: var(--accent-color);
+    transform: translateY(-2px);
+  }
+  
+  .hero-image {
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  .hero-shape {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
+  }
+  
+  /* Services Section */
+  .services-section {
+    padding: 100px 0;
+    background-color: var(--primary-bg);
+  }
+  
+  .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .section-subtitle {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 1.2rem;
+  }
+  
+  .service-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), #6c63ff);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .service-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--accent-color), #6c63ff);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 2rem;
+    color: white;
+  }
+  
+  .service-price {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 15px;
+  }
+  
+  /* Portfolio Section */
+  .portfolio-section {
+    padding: 100px 0;
+    background-color: var(--secondary-bg);
+  }
+  
+  .portfolio-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .portfolio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .portfolio-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  
+  .portfolio-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white;
+    padding: 30px 20px 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .portfolio-card:hover .portfolio-overlay {
+    transform: translateY(0);
+  }
+  
+  .portfolio-category {
+    background: var(--accent-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  /* Testimonials */
+  .testimonials-section {
+    padding: 100px 0;
+    background-color: var(--primary-bg);
+  }
+  
+  .testimonial-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 30px;
+    margin: 20px 0;
+    border: 1px solid var(--border-color);
+    position: relative;
+  }
+  
+  .testimonial-card::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--accent-color);
+    opacity: 0.2;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    line-height: 1;
+  }
+  
+  .testimonial-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .testimonial-author {
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+  }
+  
+  .testimonial-company {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+  
+
+  
+  /* About Section */
+  .about-section {
+    padding: 100px 0;
+    background-color: var(--secondary-bg);
+  }
+  
+  .feature-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .feature-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .feature-list i {
+    background: var(--accent-color);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+  
+  .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .capability-item {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+  }
+  
+  .capability-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .capability-icon {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23dots)"/></svg>');
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .btn-cta {
+    background: white;
+    color: var(--accent-color);
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+    margin-top: 20px;
+  }
+  
+  .btn-cta:hover {
+    background: transparent;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+    
+    .hero-cta {
+      justify-content: center;
+    }
+    
+    .capability-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .service-card, .portfolio-card {
+      margin-bottom: 30px;
+    }
+  }
+</style>
+
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-6 fade-in-up">
-        <h1 class="display-4 fw-bold mb-4">Empowering Businesses with Innovative Technology Solutions</h1>
-        <p class="lead mb-4">We specialize in web applications, enterprise SaaS, mobile solutions, and specialized platforms for geoscience, school management systems, and CRM solutions.</p>
-        <div class="d-flex gap-3 flex-wrap">
-          <a href="#contact" class="btn btn-light btn-lg px-4">
-            <i class="fas fa-paper-plane me-2"></i>Get Started
+      <div class="col-lg-6 hero-content">
+        <span class="hero-badge">
+          <i class="fas fa-star me-2"></i>Leading Technology Solutions
+        </span>
+        <h1 class="display-4 fw-bold mb-4">NexusSphere  - A Hub for Software and Automations</h1>
+        <p class="lead mb-4">We create cutting-edge web applications, mobile solutions, and specialized systems for Learnings, geoscience, education, and CRM.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-hero-primary">
+            <i class="fas fa-paper-plane me-2"></i>Start Your Project
           </a>
-          <a href="#portfolio" class="btn btn-outline-light btn-lg px-4">
-            <i class="fas fa-eye me-2"></i>View Our Work
+          <a href="#portfolio" class="btn-hero-secondary">
+            <i class="fas fa-play-circle me-2"></i>View Showcase
           </a>
         </div>
       </div>
-      <div class="col-lg-6 text-center fade-in-up">
-        <img src="/static/images/logo.png" alt="NexusSphere Solutions" class="img-fluid rounded shadow-lg" style="max-height: 400px;" loading="lazy">
+      <div class="col-lg-6 text-center">
+        <div class="hero-image">
+          <div class="hero-shape"></div>
+          <img src="/static/images/logo.png" alt="NexusSphere Solutions" class="img-fluid rounded-3" style="max-height: 400px; position: relative; z-index: 2;" loading="lazy">
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Services Section -->
-<section id="services" class="py-5">
+<section id="services" class="services-section">
   <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-5 fw-bold mb-3">Our Expertise</h2>
-        <p class="lead text-muted">Comprehensive technology solutions tailored to your industry needs</p>
-      </div>
+    <div class="section-title">
+      <h2 class="display-5 fw-bold mb-3">Our Expertise</h2>
+      <p class="section-subtitle">Comprehensive technology solutions tailored to your industry needs</p>
     </div>
     <div class="row g-4">
       {% for service in services %}
       <div class="col-lg-4 col-md-6">
-        <div class="card service-card h-100">
-          <div class="card-body text-center">
-            <div class="service-icon">
-              <i class="{{ service.icon|default:'fas fa-cogs' }}"></i>
-            </div>
-            <h5 class="card-title fw-bold">{{ service.get_expertise_display }}</h5>
-            <p class="card-text">{{ service.description|truncatewords:20 }}</p>
-            {% if service.price_range %}
-            <p class="text-primary fw-bold">{{ service.price_range }}</p>
-            {% endif %}
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="{{ service.icon|default:'fas fa-cogs' }}"></i>
           </div>
+          <h4 class="fw-bold mb-3">{{ service.get_expertise_display }}</h4>
+          <p class="text-muted">{{ service.description|truncatewords:20 }}</p>
+          {% if service.price_range %}
+          <div class="service-price">{{ service.price_range }}</div>
+          {% endif %}
         </div>
       </div>
       {% empty %}
       <div class="col-lg-4 col-md-6">
-        <div class="card service-card h-100">
-          <div class="card-body text-center">
-            <div class="service-icon">
-              <i class="fas fa-globe"></i>
-            </div>
-            <h5 class="card-title fw-bold">Web Applications</h5>
-            <p class="card-text">Custom web applications built with modern technologies and frameworks.</p>
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-globe"></i>
           </div>
+          <h4 class="fw-bold mb-3">Web Applications</h4>
+          <p class="text-muted">Custom web applications built with modern technologies and frameworks for optimal performance.</p>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
-        <div class="card service-card h-100">
-          <div class="card-body text-center">
-            <div class="service-icon">
-              <i class="fas fa-cloud"></i>
-            </div>
-            <h5 class="card-title fw-bold">Enterprise SaaS</h5>
-            <p class="card-text">Scalable Software-as-a-Service solutions for businesses of all sizes.</p>
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-cloud"></i>
           </div>
+          <h4 class="fw-bold mb-3">Learning Management System</h4>
+          <p class="text-muted">Comprehensive learning management solutions designed for educational institutions and corporate training programs.</p>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
-        <div class="card service-card h-100">
-          <div class="card-body text-center">
-            <div class="service-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <h5 class="card-title fw-bold">Mobile Applications</h5>
-            <p class="card-text">Native and cross-platform mobile apps for iOS and Android.</p>
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-mobile-alt"></i>
           </div>
+          <h4 class="fw-bold mb-3">Mobile Applications</h4>
+          <p class="text-muted">Native and cross-platform mobile apps for iOS and Android with seamless user experiences.</p>
         </div>
       </div>
       {% endfor %}
@@ -98,183 +491,164 @@
 </section>
 
 <!-- Portfolio Section -->
-<section id="portfolio" class="py-5 bg-light">
+<section id="portfolio" class="portfolio-section">
   <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-5 fw-bold mb-3">Featured Projects</h2>
-        <p class="lead text-muted">Showcasing our expertise through successful implementations</p>
-      </div>
+    <div class="section-title">
+      <h2 class="display-5 fw-bold mb-3">Featured Projects</h2>
+      <p class="section-subtitle">Showcasing our expertise through successful implementations</p>
     </div>
     <div class="row g-4">
       {% for project in featured_projects %}
       <div class="col-lg-4 col-md-6">
         <div class="portfolio-card">
-          <img src="{% if project.image %}{{ project.image.url }}{% else %}https://via.placeholder.com/400x300/1a73e8/white?text={{ project.title }}{% endif %}"
-               alt="{{ project.title }}" class="img-fluid w-100">
+          <img src="/static/images/Geonexus.png" alt="Geoscience Platform" class="portfolio-image" loading="lazy">
           <div class="portfolio-overlay">
-            <h5 class="mb-2">{{ project.title }}</h5>
-            <p class="mb-2">{{ project.client }}</p>
-            <small class="text-uppercase">{{ project.get_expertise_display }}</small>
+            <span class="portfolio-category mb-2">Geoscience Platforms</span>
+            <h5 class="text-white mb-2">Geoscience Data Analysis Platform</h5>
+            <p class="text-light mb-0">Environmental Consulting Firm</p>
           </div>
         </div>
+      </div>
       </div>
       {% empty %}
       <div class="col-lg-4 col-md-6">
-      <div class="portfolio-card">
-          <img src="/static/images/nexus2.png" alt="Geoscience Platform" class="img-fluid w-100" loading="lazy">
+        <div class="portfolio-card">
+          <img src="/static/images/Geonexus.png" alt="Geoscience Platform" class="portfolio-image" loading="lazy">
           <div class="portfolio-overlay">
-            <h5 class="mb-2">Geoscience Data Analysis Platform</h5>
-            <p class="mb-2">Environmental Consulting Firm</p>
-            <small class="text-uppercase">Geoscience Platforms</small>
+            <span class="portfolio-category mb-2">Geoscience Platforms</span>
+            <h5 class="text-white mb-2">Geoscience Data Analysis Platform</h5>
+            <p class="text-light mb-0">Automating Data Exploration Visualisation and Modelling</p>
           </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="portfolio-card">
-          <img src="/static/images/school.png" alt="School Management System" class="img-fluid w-100">
+          <img src="/static/images/school.png" alt="School Management System" class="portfolio-image">
           <div class="portfolio-overlay">
-            <h5 class="mb-2">University Management System</h5>
-            <p class="mb-2">Private University</p>
-            <small class="text-uppercase">School Management</small>
+            <span class="portfolio-category mb-2">School Management</span>
+            <h5 class="text-white mb-2">Schools Management System</h5>
+            <p class="text-light mb-0">All inclusive School Management Platforms</p>
           </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="portfolio-card">
-          <img src="/static/images/CRM.png" alt="CRM System" class="img-fluid w-100">
+          <img src="/static/images/CRM.png" alt="CRM System" class="portfolio-image">
           <div class="portfolio-overlay">
-            <h5 class="mb-2">Customer Relationship Management</h5>
-            <p class="mb-2">Healthcare Provider</p>
-            <small class="text-uppercase">CRM Solutions</small>
+            <span class="portfolio-category mb-2">CRM Solutions</span>
+            <h5 class="text-white mb-2">Customer Relationship Management</h5>
+            <p class="text-light mb-0">Healthcare Provider</p>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
-    <div class="text-center mt-4">
-      <a href="{% url 'core:portfolio' %}" class="btn btn-primary btn-lg px-4">
-        <i class="fas fa-arrow-right me-2"></i>View All Projects
+    <div class="text-center mt-5">
+      <a href="{% url 'core:portfolio' %}" class="btn btn-primary btn-lg px-5">
+        <i class="fas fa-arrow-right me-2"></i>Explore All Projects
       </a>
     </div>
   </div>
 </section>
 
 <!-- Testimonials Section -->
-<section id="testimonials" class="py-5">
+<section id="testimonials" class="testimonials-section">
   <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-5 fw-bold mb-3">What Our Clients Say</h2>
-        <p class="lead text-muted">Trusted by businesses worldwide</p>
-      </div>
+    <div class="section-title">
+      <h2 class="display-5 fw-bold mb-3">Client Success Stories</h2>
+      <p class="section-subtitle">Trusted by innovative businesses worldwide</p>
     </div>
     <div class="row g-4">
       <div class="col-lg-4">
         <div class="testimonial-card">
           <p class="testimonial-text">"Exceptional work on our geoscience platform. The team understood our complex requirements and delivered a solution that exceeded expectations."</p>
-          <p class="testimonial-author">Dr. Sarah Johnson<br><small class="text-muted">Chief Scientist, GeoTech Solutions</small></p>
+          <p class="testimonial-author">Dr. Sarah Johnson</p>
+          <p class="testimonial-company">Chief Scientist, GeoTech Solutions</p>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="testimonial-card">
-          <p class="testimonial-text">"The school management system transformed how we operate. Student records, scheduling, and communication are now seamless."</p>
-          <p class="testimonial-author">Michael Rodriguez<br><small class="text-muted">Director, Metropolitan University</small></p>
+          <p class="testimonial-text">"The school management system transformed how we operate. Student records, scheduling, and communication are now seamless and efficient."</p>
+          <p class="testimonial-author">Michael Rodriguez</p>
+          <p class="testimonial-company">Director, Metropolitan University</p>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="testimonial-card">
-          <p class="testimonial-text">"Our CRM implementation has boosted sales by 40%. The customization options and user-friendly interface are outstanding."</p>
-          <p class="testimonial-author">Jennifer Chen<br><small class="text-muted">CEO, Healthcare Solutions Inc.</small></p>
+          <p class="testimonial-text">"Our CRM implementation has boosted sales by 40%. The customization options and user-friendly interface are absolutely outstanding."</p>
+          <p class="testimonial-author">Jennifer Chen</p>
+          <p class="testimonial-company">CEO, Healthcare Solutions Inc.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Stats Section -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stats-card">
-          <span class="stats-number">500+</span>
-          <span class="stats-label">Projects Delivered</span>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stats-card">
-          <span class="stats-number">150+</span>
-          <span class="stats-label">Happy Clients</span>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stats-card">
-          <span class="stats-number">5+</span>
-          <span class="stats-label">Years Experience</span>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stats-card">
-          <span class="stats-number">24/7</span>
-          <span class="stats-label">Support</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- About Section -->
-<section id="about" class="py-5">
+<section id="about" class="about-section">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-6 mb-4">
+      <div class="col-lg-6 mb-5">
         <h2 class="display-5 fw-bold mb-4">Why Choose {{ project_name }}?</h2>
-        <p class="lead mb-4">We combine cutting-edge technology with deep industry expertise to deliver solutions that drive real business results.</p>
-        <ul class="list-unstyled">
-          <li class="mb-3">
-            <i class="fas fa-check-circle text-primary me-3"></i>
-            <strong>Custom Solutions:</strong> Tailored to your specific business needs
+        <p class="lead mb-4">We combine cutting-edge technology with deep industry expertise to deliver solutions that drive real business results and digital transformation.</p>
+        <ul class="feature-list">
+          <li>
+            <i class="fas fa-check"></i>
+            <div>
+              <strong>Custom Solutions:</strong> Tailored to your specific business needs and workflows
+            </div>
           </li>
-          <li class="mb-3">
-            <i class="fas fa-check-circle text-primary me-3"></i>
-            <strong>Industry Experts:</strong> Deep knowledge in geoscience, education, and CRM
+          <li>
+            <i class="fas fa-check"></i>
+            <div>
+              <strong>Industry Experts:</strong> Deep knowledge in geoscience, education, and CRM domains
+            </div>
           </li>
-          <li class="mb-3">
-            <i class="fas fa-check-circle text-primary me-3"></i>
-            <strong>Modern Technology:</strong> Latest frameworks and best practices
+          <li>
+            <i class="fas fa-check"></i>
+            <div>
+              <strong>Modern Technology:</strong> Latest frameworks, architectures, and best practices
+            </div>
           </li>
-          <li class="mb-3">
-            <i class="fas fa-check-circle text-primary me-3"></i>
-            <strong>Reliable Support:</strong> Ongoing maintenance and updates
+          <li>
+            <i class="fas fa-check"></i>
+            <div>
+              <strong>Reliable Support:</strong> Ongoing maintenance, updates, and 24/7 support
+            </div>
           </li>
         </ul>
       </div>
-      <div class="col-lg-6 text-center">
-        <div class="row g-3">
-          <div class="col-6">
-            <div class="p-4 bg-primary text-white rounded">
-              <i class="fas fa-code fa-3x mb-3"></i>
-              <h5>Web Development</h5>
+      <div class="col-lg-6">
+        <div class="capability-grid">
+          <div class="capability-item">
+            <div class="capability-icon">
+              <i class="fas fa-code"></i>
             </div>
+            <h5>Web Development</h5>
+            <p class="small mb-0">Modern, responsive web applications</p>
           </div>
-          <div class="col-6">
-            <div class="p-4 bg-success text-white rounded">
-              <i class="fas fa-mobile-alt fa-3x mb-3"></i>
-              <h5>Mobile Apps</h5>
+          <div class="capability-item">
+            <div class="capability-icon">
+              <i class="fas fa-mobile-alt"></i>
             </div>
+            <h5>Mobile Apps</h5>
+            <p class="small mb-0">iOS & Android native development</p>
           </div>
-          <div class="col-6">
-            <div class="p-4 bg-warning text-white rounded">
-              <i class="fas fa-cloud fa-3x mb-3"></i>
-              <h5>SaaS Solutions</h5>
+          <div class="capability-item">
+            <div class="capability-icon">
+              <i class="fas fa-cloud"></i>
             </div>
+            <h5>Learning Management Solutions</h5>
+            <p class="small mb-0">Scalable LMS platforms</p>
           </div>
-          <div class="col-6">
-            <div class="p-4 bg-info text-white rounded">
-              <i class="fas fa-users fa-3x mb-3"></i>
-              <h5>Consulting</h5>
+          <div class="capability-item">
+            <div class="capability-icon">
+              <i class="fas fa-users"></i>
             </div>
+            <h5>Consulting</h5>
+            <p class="small mb-0">Strategic technology guidance</p>
           </div>
         </div>
       </div>
@@ -285,14 +659,12 @@
 <!-- CTA Section -->
 <section id="contact" class="cta-section">
   <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="display-5 fw-bold mb-3">Ready to Start Your Project?</h2>
-        <p class="lead mb-4">Let's discuss how we can help transform your business with innovative technology solutions.</p>
-        <a href="{% url 'core:contact' %}" class="btn-cta">
-          <i class="fas fa-envelope me-2"></i>Contact Us Today
-        </a>
-      </div>
+    <div class="cta-content">
+      <h2 class="display-5 fw-bold mb-3">Ready to Transform Your Business?</h2>
+      <p class="lead mb-4">Let's discuss how we can help transform your business with innovative technology solutions tailored to your unique needs.</p>
+      <a href="{% url 'core:contact' %}" class="btn-cta">
+        <i class="fas fa-envelope me-2"></i>Start Conversation
+      </a>
     </div>
   </div>
 </section>
